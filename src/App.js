@@ -1,6 +1,6 @@
-import './App.css';
 import React, { useState } from 'react';
 
+import Form from './components/Form'
 
 const TeamMembersList = [
   { name: 'Mike', email: 'mike@me.com', role: 'student', id: 0 },
@@ -11,16 +11,33 @@ const TeamMembersList = [
 function App() {
   const [teamMembers, setTeamMembers] = useState(TeamMembersList)
 
+  const [formValues, setFormValues] = useState({
+    name: "",
+    email: "",
+    role: ""
+  })
+
+  const updateForm = (name, value) => {
+    setFormValues({ ...formValues, [name]: value})
+  }
+
+  const submitForm = () => {
+    console.log(formValues)
+    setTeamMembers([ ...teamMembers, formValues ])
+    setFormValues({ 
+      name: "",
+      email: "",
+      role: ""
+    })
+  }
+
   return (
     <div className="App">
       <h1>Team Builder</h1>
-      <form>
-        <input 
-          name="teamMemberName"
-          type="text"
-        />
-
-      </form>
+      <Form
+        values={formValues}
+        update={updateForm}
+        submit={submitForm} />
       {teamMembers.map(member => <h2 key={member.id}>{member.name} email: {member.email} role: {member.role} </h2>)}
     </div>
   );
