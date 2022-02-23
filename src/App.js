@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
 import Form from './components/Form'
+import TeamMember from './components/TeamMember'
 
 const TeamMembersList = [
-  { name: 'Mike', email: 'mike@me.com', role: 'student', id: 0 },
-  { name: 'Mark', email: 'theZuck@meta.com', role: 'reptilian', id: 1 },
-  { name: 'Joe', email: 'potus@whitehouse.gov', role: 'president', id: 2 },
+  { name: 'Mike', email: 'mike@me.com', role: 'Student', id: 0 },
+  { name: 'Mark', email: 'theZuck@meta.com', role: 'Reptilian', id: 1 },
+  { name: 'Joe', email: 'potus@whitehouse.gov', role: 'Politician', id: 2 },
 ]
 
 function App() {
@@ -16,6 +17,25 @@ function App() {
     email: "",
     role: ""
   })
+
+  const [memberToEdit, setMemberToEdit] = useState({})
+  const [isEditing, setIsEditing] = useState(false)
+
+  const edit = (teamMember) =>  {
+    setMemberToEdit({
+      name: teamMember.name,
+      email: teamMember.email,
+      role: teamMember.role,
+      id: teamMember.id
+    })
+
+    setFormValues({
+      name: teamMember.name,
+      email: teamMember.email,
+      role: teamMember.role
+    })
+
+  }
 
   const updateForm = (name, value) => {
     setFormValues({ ...formValues, [name]: value})
@@ -37,8 +57,9 @@ function App() {
       <Form
         values={formValues}
         update={updateForm}
-        submit={submitForm} />
-      {teamMembers.map(member => <h2 key={member.id}>{member.name} email: {member.email} role: {member.role} </h2>)}
+        submit={submitForm}
+        isEditing={isEditing} />
+      {teamMembers.map(member => <TeamMember key={member.id} info={member} edit={edit} isEditing={setIsEditing}/>)}
     </div>
   );
 }

@@ -1,6 +1,11 @@
 import React from 'react'
 
-function Form({values, update, submit}) {
+function Form({values, update, submit, isEditing}) {
+
+    let buttonText = "Add Team Member"
+    if (isEditing === true) {
+        buttonText = "Edit Team Member"
+    }
 
     const changeHandler = event => {
         const name = event.target.name
@@ -40,9 +45,10 @@ function Form({values, update, submit}) {
                     <option value="Politician">Politician</option>
                     <option value="Pundit">Pundit</option>
                     <option value="Propagandist">Propagandist</option>
+                    <option value="Reptilian">Reptilian</option>
                 </select>
             </label>
-            <input type="submit" value="Add Team Member" />
+            <input type="submit" value={buttonText} />
         </form>
     )
 }
